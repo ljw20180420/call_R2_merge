@@ -2,8 +2,9 @@
 
 struct Command_content
 {
-    std::string file1;
-    std::string file2;
+    std::string R1;
+    std::string R2;
+    std::string source;
     std::string div_string;
     size_t sta=0;
     size_t end=std::string::npos;
@@ -11,10 +12,12 @@ struct Command_content
     {
         for(int i=1; i<argc-1; ++i)
         {
-            if(!strcmp(argv[i],"-file1"))
-                file1=std::string(argv[i+1]);
-            if(!strcmp(argv[i],"-file2"))
-                file2=std::string(argv[i+1]);
+            if(!strcmp(argv[i],"-R1"))
+                R1=std::string(argv[i+1]);
+            if(!strcmp(argv[i],"-R2"))
+                R2=std::string(argv[i+1]);
+            if(!strcmp(argv[i],"-source"))
+                source=std::string(argv[i+1]);
             if(!strcmp(argv[i],"-div_strings"))
                 div_string=std::string(argv[i+1]);
             if(!strcmp(argv[i],"-sta"))
@@ -31,9 +34,9 @@ struct Command_content
 int main(int argc, char **argv) 
 {
     Command_content cc(argc,argv);
-    std::ofstream fout(cc.file2+".op");
-    std::ifstream fin1(cc.file1);
-    std::ifstream fin2(cc.file2);
+    std::ofstream fout(cc.R2);
+    std::ifstream fin1(cc.R1);
+    std::ifstream fin2(cc.source);
     std::string address1, address2;
     getline(fin1,address1);
     getline(fin2,address2);
