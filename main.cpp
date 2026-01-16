@@ -30,6 +30,12 @@ struct Command_content
     }
 };
 
+std::string get_and_cut_addr(std::ifstream &fin, std::string &div_string) {
+    std::string addr;
+    getline(fin, addr);
+    int pos=addr.find_first_of(div_string);
+    return addr.substr(0, pos);
+}
 
 int main(int argc, char **argv) {
     for(int i=1; i<argc; ++i) {
@@ -43,31 +49,33 @@ int main(int argc, char **argv) {
     std::ofstream fout(cc.R2);
     std::ifstream fin1(cc.R1);
     std::ifstream fin2(cc.source);
-    std::string address1, address2;
-    getline(fin1,address1);
-    getline(fin2,address2);
-    while(fin1.good())
-    {
-        int tmp=address1.find_first_of(cc.div_string);
-        std::string left_address=address1.substr(0,tmp);
-        while(fin2.good())
-        {
-            tmp=address2.find_first_of(cc.div_string);
-            if(address2.substr(0,tmp)==left_address)
-            {
-                for(int i=0; i<4; ++i)
+    std::string addr1 = get_and_cut_addr(fin1, cc.div_string);
+    std::string addr2 = get_and_cut_addr(fin2, cc.div_string);
+    while(fin1.good()) {
+        while(fin2.good()) {
+            if(addr2 == addr1) {
+                fout << addr2 << '\n';
+                for(int i=0; i<3; ++i)
                 {
-                    fout << address2 << '\n';
-                    getline(fin2,address2);
+                    getline(fin2, addr2);
                     if(i==0 || i==2)
-                        address2=address2.substr(cc.sta,cc.end-cc.sta);
+                        addr2 = addr2.substr(cc.sta, cc.end - cc.sta);
+                    fout << addr2 << '\n';
                 }
+                addr2 = get_and_cut_addr(fin2, cc.div_string);
                 break;
             }
-            else
-                for(int i=0; i<4; ++i) getline(fin2,address2);
+            else {
+                for(int i=0; i<3; ++i) {
+                    getline(fin2, addr2);
+                }
+                addr2 = get_and_cut_addr(fin2, cc.div_string);
+            }
         }
-        for(int i=0; i<4; ++i) getline(fin1,address1);
+        for(int i=0; i<3; ++i) {
+            getline(fin1, addr1);
+        }
+        addr1 = get_and_cut_addr(fin1, cc.div_string);
     }
     
     return 0;
