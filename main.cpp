@@ -31,8 +31,14 @@ struct Command_content
 };
 
 
-int main(int argc, char **argv) 
-{
+int main(int argc, char **argv) {
+    for(int i=1; i<argc; ++i) {
+        if(!strcmp(argv[i],"-h") || !strcmp(argv[i],"--help") || !strcmp(argv[i],"-help")) {
+            std::cout << "./call_r2_merge -R1 R1.fq -R2 R2.fq -source 下机.R2.fq -sta 截取起始 -end 截取终止\n";
+            return 0;
+        }
+    }
+
     Command_content cc(argc,argv);
     std::ofstream fout(cc.R2);
     std::ifstream fin1(cc.R1);
