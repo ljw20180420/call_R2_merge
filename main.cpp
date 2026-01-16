@@ -30,9 +30,7 @@ struct Command_content
     }
 };
 
-std::string get_and_cut_addr(std::ifstream &fin, std::string &div_string) {
-    std::string addr;
-    getline(fin, addr);
+std::string cut_addr(std::string &addr, std::string &div_string) {
     int pos=addr.find_first_of(div_string);
     return addr.substr(0, pos);
 }
@@ -49,33 +47,30 @@ int main(int argc, char **argv) {
     std::ofstream fout(cc.R2);
     std::ifstream fin1(cc.R1);
     std::ifstream fin2(cc.source);
-    std::string addr1 = get_and_cut_addr(fin1, cc.div_string);
-    std::string addr2 = get_and_cut_addr(fin2, cc.div_string);
+    std::string addr1, addr2;
+    getline(fin1, addr1);
+    getline(fin2, addr2);
     while(fin1.good()) {
         while(fin2.good()) {
-            if(addr2 == addr1) {
-                fout << addr2 << '\n';
-                for(int i=0; i<3; ++i)
+            if(cut_addr(addr2, cc.div_string) == cut_addr(addr1, cc.div_string)) {
+                for(int i=0; i<4; ++i)
                 {
+                    fout << addr2 << '\n';
                     getline(fin2, addr2);
                     if(i==0 || i==2)
                         addr2 = addr2.substr(cc.sta, cc.end - cc.sta);
-                    fout << addr2 << '\n';
                 }
-                addr2 = get_and_cut_addr(fin2, cc.div_string);
                 break;
             }
             else {
-                for(int i=0; i<3; ++i) {
+                for(int i=0; i<4; ++i) {
                     getline(fin2, addr2);
                 }
-                addr2 = get_and_cut_addr(fin2, cc.div_string);
             }
         }
-        for(int i=0; i<3; ++i) {
+        for(int i=0; i<4; ++i) {
             getline(fin1, addr1);
         }
-        addr1 = get_and_cut_addr(fin1, cc.div_string);
     }
     
     return 0;
