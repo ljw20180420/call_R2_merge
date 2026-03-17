@@ -1,12 +1,13 @@
 #include "CallR2.hpp"
 #include "Truncate.hpp"
 #include "SplitIndex.hpp"
+#include "ListSuffix.hpp"
 
 void help(int argc, char **argv)
 {
     if ((argc < 2) || !strcmp(argv[1], "-h") || !strcmp(argv[1], "--help") || !strcmp(argv[1], "-help"))
     {
-        std::cout << "fqtools (call-R2|truncate|split-index) -h|--help|-help\n";
+        std::cout << "fqtools (call-R2|truncate|split-index|list-suffix) -h|--help|-help\n";
         exit(0);
     }
 }
@@ -26,6 +27,10 @@ void cmd(int argc, char **argv)
     else if (!strcmp(cmd_argv[0], "split-index"))
     {
         SplitIndex(cmd_argc, cmd_argv).run();
+    }
+    else if (!strcmp(cmd_argv[0], "list-suffix"))
+    {
+        ListSuffix(cmd_argc, cmd_argv).run();
     }
     else
     {
