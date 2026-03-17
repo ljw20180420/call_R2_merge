@@ -1,4 +1,2 @@
 /build
-/test/R2.fq
-/test2/R2.fq
-/main
+/tests/CallR2/R2.fq

@@ -2,5 +2,5 @@
 
 mkdir -p build
 cd build
-cmake -S .. -DCMAKE_BUILD_TYPE=Release
+cmake -S ../src -DCMAKE_BUILD_TYPE=Release
 make
