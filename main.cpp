@@ -5,7 +5,7 @@ struct Command_content
     std::string R1;
     std::string R2;
     std::string source;
-    std::string delimiters;
+    std::string delimiter;
     size_t sta=0;
     size_t end=std::string::npos;
     Command_content(int argc, char **argv)
@@ -18,8 +18,8 @@ struct Command_content
                 R2=std::string(argv[i+1]);
             if(!strcmp(argv[i],"-source"))
                 source=std::string(argv[i+1]);
-            if(!strcmp(argv[i],"-delimiters"))
-                delimiters=std::string(argv[i+1]);
+            if(!strcmp(argv[i],"-delimiter"))
+                delimiter=std::string(argv[i+1]);
             if(!strcmp(argv[i],"-sta"))
                 sta=stoi(std::string(argv[i+1]));
             if(!strcmp(argv[i],"-end"))
@@ -28,15 +28,15 @@ struct Command_content
     }
 };
 
-std::string cut_addr(std::string &addr, std::string &delimiters) {
-    int pos=addr.find_first_of(delimiters);
+std::string cut_addr(std::string &addr, std::string &delimiter) {
+    int pos=addr.find_first_of(delimiter);
     return addr.substr(0, pos);
 }
 
 int main(int argc, char **argv) {
     for(int i=1; i<argc; ++i) {
         if(!strcmp(argv[i],"-h") || !strcmp(argv[i],"--help") || !strcmp(argv[i],"-help")) {
-            std::cout << "./call_r2_merge -R1 R1.fq -R2 R2.fq -source 下机.R2.fq -delimiters \"分割字母集合\" -sta 截取起始 -end 截取终止\n";
+            std::cout << "./call_r2_merge -R1 R1.fq[in] -R2 R2.fq[out] -source source.R2.fq[in] -delimiter \"str\" -sta truncate_start -end truncate_end\n";
             return 0;
         }
     }
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
     getline(fin2, addr2);
     while(fin1.good()) {
         while(fin2.good()) {
-            if(cut_addr(addr2, cc.delimiters) == cut_addr(addr1, cc.delimiters)) {
+            if(cut_addr(addr2, cc.delimiter) == cut_addr(addr1, cc.delimiter)) {
                 for(int i=0; i<4; ++i)
                 {
                     fout << addr2 << '\n';
