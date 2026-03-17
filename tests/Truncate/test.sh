@@ -5,4 +5,5 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # change to project directory
 cd ../..
 
-./build/fqtools call-R2 -R1 tests/CallR2/R1.fq -R2 tests/CallR2/R2.fq -delimiter " "
+./build/fqtools truncate < tests/Truncate/test.fq
+./build/fqtools truncate -sta 10 -end 140 < tests/Truncate/test.fq

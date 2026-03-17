@@ -6,14 +6,13 @@ private:
     std::string R1;
     std::string R2;
     std::string delimiter;
-    size_t sta = 0;
-    size_t end = std::string::npos;
 
     void help(int argc, char **argv)
     {
         if (argc < 2 || !strcmp(argv[1], "-h") || !strcmp(argv[1], "--help") || !strcmp(argv[1], "-help"))
         {
-            std::cout << "fqtools call-R2 -R1 R1.fq -R2 R2.fq -delimiter \"str\" -sta truncate_start[optional, default: 0] -end truncate_end[optional, default: end_of_read]\n";
+            std::cout << "fqtools call-R2 -R1 R1.fq -R2 R2.fq -delimiter \"str\"\n";
+            std::cout << "    -delimiter: only compare address before delimiter\n";
             exit(0);
         }
     }
@@ -28,10 +27,6 @@ private:
                 R2 = std::string(argv[i + 1]);
             if (!strcmp(argv[i], "-delimiter"))
                 delimiter = std::string(argv[i + 1]);
-            if (!strcmp(argv[i], "-sta"))
-                sta = stoi(std::string(argv[i + 1]));
-            if (!strcmp(argv[i], "-end"))
-                end = stoi(std::string(argv[i + 1]));
         }
     }
 
@@ -65,8 +60,6 @@ public:
                     {
                         std::cout << addr2 << '\n';
                         getline(fin2, addr2);
-                        if (i == 0 || i == 2)
-                            addr2 = addr2.substr(sta, end - sta);
                     }
                     break;
                 }

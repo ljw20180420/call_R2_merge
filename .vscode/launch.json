@@ -5,7 +5,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["call-R2", "-R1", "tests/CallR2/R1.fq", "-R2", "tests/CallR2/R2.fq", "-delimiter", "\" \"", "-sta", "0", "-end", "150"],
+            "args": ["truncate", "<", "tests/Truncate/test.fq"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}/..",
             "environment": [],

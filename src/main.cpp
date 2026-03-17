@@ -1,10 +1,11 @@
 #include "CallR2.hpp"
+#include "Truncate.hpp"
 
 void help(int argc, char **argv)
 {
     if ((argc < 2) || !strcmp(argv[1], "-h") || !strcmp(argv[1], "--help") || !strcmp(argv[1], "-help"))
     {
-        std::cout << "fqtools (call-R2) -h|--help|-help\n";
+        std::cout << "fqtools (call-R2|truncate) -h|--help|-help\n";
         exit(0);
     }
 }
@@ -17,6 +18,11 @@ void cmd(int argc, char **argv)
     {
         CallR2 call_r2 = CallR2(cmd_argc, cmd_argv);
         call_r2.run();
+    }
+    else if (!strcmp(cmd_argv[0], "truncate"))
+    {
+        Truncate truncate = Truncate(cmd_argc, cmd_argv);
+        truncate.run();
     }
 }
 
